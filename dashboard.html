@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Pulse - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="vanta-canvas"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top navbar-blur">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold fs-5" href="#">
+                <i class="bi bi-lightning-charge-fill text-primary"></i> Project Pulse
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item">
+                        <button class="btn btn-light rounded-circle" id="themeToggle" title="Toggle Theme">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" alt="Profile" class="rounded-circle" width="40" height="40">
+                            <div class="d-none d-sm-block">
+                                <div class="fw-bold small">Admin User</div>
+                                <div class="text-muted small">Project Manager</div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle"></i> My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" id="signoutBtn" href="index.html"><i class="bi bi-box-arrow-right"></i> Sign Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row g-0">
+            <nav class="col-md-3 col-lg-2 sidebar">
+                <div class="sidebar-content">
+                    <ul class="nav flex-column gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="dashboard.html" data-page="dashboard">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tasks.html" data-page="tasks">
+                                <i class="bi bi-check2-square"></i> Tasks
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="projects.html" data-page="projects">
+                                <i class="bi bi-folder-check"></i> Projects
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="team.html" data-page="team">
+                                <i class="bi bi-people"></i> Team
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 col-lg-10 main-content">
+                <div id="dashboard" class="page-content active p-4">
+                    <div class="mb-4">
+                        <h1 class="display-6 fw-bold">Dashboard</h1>
+                        <p class="text-muted">Welcome back! Here's your project overview.</p>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted small mb-1">Active Projects</p>
+                                        <h3 class="fw-bold mb-0" id="activeProjectsCount">0</h3>
+                                    </div>
+                                    <div class="stat-icon bg-primary bg-opacity-10 rounded-2 p-2">
+                                        <i class="bi bi-folder-check text-primary fs-5"></i>
+                                    </div>
+                                </div>
+                                <small class="text-success"><i class="bi bi-arrow-up"></i> In progress</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted small mb-1">Pending Tasks</p>
+                                        <h3 class="fw-bold mb-0" id="pendingTasksCount">0</h3>
+                                    </div>
+                                    <div class="stat-icon bg-warning bg-opacity-10 rounded-2 p-2">
+                                        <i class="bi bi-hourglass-split text-warning fs-5"></i>
+                                    </div>
+                                </div>
+                                <small class="text-warning"><i class="bi bi-exclamation-circle"></i> <span id="overdueInfo">0 overdue</span></small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted small mb-1">Completed Tasks</p>
+                                        <h3 class="fw-bold mb-0" id="completedTasksCount">0</h3>
+                                    </div>
+                                    <div class="stat-icon bg-success bg-opacity-10 rounded-2 p-2">
+                                        <i class="bi bi-check-circle text-success fs-5"></i>
+                                    </div>
+                                </div>
+                                <small class="text-success"><i class="bi bi-check-circle"></i> <span id="completionRate">0%</span></small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted small mb-1">Team Members</p>
+                                        <h3 class="fw-bold mb-0" id="teamMembersCount">0</h3>
+                                    </div>
+                                    <div class="stat-icon bg-info bg-opacity-10 rounded-2 p-2">
+                                        <i class="bi bi-people text-info fs-5"></i>
+                                    </div>
+                                </div>
+                                <small class="text-info"><i class="bi bi-check-circle"></i> <span id="activeTeamInfo">Active</span></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-lg-8">
+                            <div class="chart-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="fw-bold mb-0">Task Status Distribution</h5>
+                                </div>
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="chart-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="mb-3">
+                                    <h5 class="fw-bold mb-0">Task Priority</h5>
+                                </div>
+                                <canvas id="priorityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="chart-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="mb-3">
+                                    <h5 class="fw-bold mb-0">Project Status Overview</h5>
+                                </div>
+                                <canvas id="projectChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="chart-card bg-white rounded-3 p-4 shadow-sm">
+                                <div class="mb-3">
+                                    <h5 class="fw-bold mb-0">Tasks by Project</h5>
+                                </div>
+                                <canvas id="tasksPerProjectChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="script_all.js"></script>
+    <script src="script_projects.js"></script>
+    <script src="script_tasks.js"></script>
+    <script src="script_dash.js"></script>
+</body>
+</html>
+
+
